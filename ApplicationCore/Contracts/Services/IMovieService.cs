@@ -1,11 +1,15 @@
 ﻿using System;
+using ApplicationCore.Models;
+
 namespace ApplicationCore.Contracts.Services
 {
 	public interface IMovieService
 	{
 		// all the business functionality methods pertaining to movies
+		List<MovieCardModel> GetTopGrossingMovies();
 
-		// MovieModel GetMovieDetails(int movieId)
+		// get movie details
+		MovieDetailsModel GetMovieDetails(int movieId);
 	}
 }
 
