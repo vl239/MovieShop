@@ -14,7 +14,7 @@ namespace ApplicationCore.Entities
         [MaxLength(2084)]
         public string Name { get; set; }
 
-        // Navigation property
+        // Navigation props
         public Movie Movie { get; set; }
 
     }
