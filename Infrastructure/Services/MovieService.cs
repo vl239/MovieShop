@@ -1,4 +1,5 @@
 ﻿using System;
+using ApplicationCore.Contracts.Repositories;
 using ApplicationCore.Contracts.Services;
 using ApplicationCore.Models;
 
@@ -6,6 +7,13 @@ namespace Infrastructure.Services
 {
 	public class MovieService : IMovieService
 	{
+        public readonly IMovieRepository _movieRepository;
+
+        public MovieService(IMovieRepository movieRepository)
+        {
+            _movieRepository = movieRepository;
+        }
+
         public MovieDetailsModel GetMovieDetails(int id)
         {
             var movie = new MovieDetailsModel
@@ -20,17 +28,16 @@ namespace Infrastructure.Services
         // list of movies
         public List<MovieCardModel> GetTopGrossingMovies()
         {
-            // call the movie repo to get the data from database
-            var movies = new List<MovieCardModel>
-            {
-                new MovieCardModel { Id=1, PosterUrl="", Title="Inception"},
-            new MovieCardModel { Id = 2, PosterUrl = "", Title = "" },
-            new MovieCardModel { Id = 3, PosterUrl = "", Title = "" },
-            new MovieCardModel { Id = 4, PosterUrl = "", Title = "" },
-            new MovieCardModel { Id = 5, PosterUrl = "", Title = "" }
-            };
+            var movies = _movieRepository.Get30HighestGrossingMovies();
 
-            return movies;
+            var movieCards = new List<MovieCardModel>();
+
+            foreach (var movie in movies)
+            {
+                movieCards.Add(new MovieCardModel { Id = movie.Id, PosterUrl = movie.PosterUrl, Title = movie.Title });
+            }
+
+            return movieCards;
         }
 	}
 }

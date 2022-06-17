@@ -1,5 +1,7 @@
-﻿using ApplicationCore.Contracts.Services;
+﻿using ApplicationCore.Contracts.Repositories;
+using ApplicationCore.Contracts.Services;
 using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +14,7 @@ builder.Services.AddControllersWithViews();
 // older.NET Framework DIR was not builtin, we had to rely on thrid party libraries, autofac, ninject
 builder.Services.AddScoped<IMovieService, MovieService>();
 //builder.Services.AddScoped<IMovieService, MovieTestService>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 
 // inject the connection string into DbContext options conustructor
 // get the connection string from app settings
