@@ -1,11 +1,13 @@
 ﻿using System;
+using ApplicationCore.Entities;
+
 namespace ApplicationCore.Contracts.Repositories
 {
-	public interface IMovieRepository
+	public interface IMovieRepository : IRepository<Movie>
 	{
-		// all the database logic methods for movies
+		IEnumerable<Movie> Get30HighestGrossingMovies();
 
-		// Movie GetMovie(int id)
+		IEnumerable<Movie> Get30HighestRatedMovies();
 	}
 }
 
