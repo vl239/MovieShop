@@ -1,3 +1,23 @@
-﻿<h2>
-    Show Movie Details Page
+﻿@model ApplicationCore.Models.MovieDetailsModel
+
+<h2>
+    @Model.Title
 </h2>
+
+<h3>
+    @Model.Overview
+</h3>
+
+@foreach (var trailer in Model.Trailers)
+{
+    <div>
+        @trailer.Name
+    </div>
+}
+
+@foreach (var genre in Model.Genres)
+{
+    <div>
+        @genre.Name
+    </div>
+}
