@@ -77,7 +77,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CrewMember");
+                    b.ToTable("CrewMembers");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Favorite", b =>
@@ -100,7 +100,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Favorite");
+                    b.ToTable("Favorites");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Genre", b =>
@@ -293,7 +293,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Purchase");
+                    b.ToTable("Purchases");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Review", b =>
@@ -332,7 +332,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.Trailer", b =>
@@ -415,7 +415,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("ApplicationCore.Entities.UserRole", b =>
