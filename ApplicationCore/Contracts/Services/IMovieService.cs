@@ -9,7 +9,7 @@ namespace ApplicationCore.Contracts.Services
 		List<MovieCardModel> GetTopGrossingMovies();
 
 		// get movie details
-		MovieDetailsModel GetMovieDetails(int movieId);
+		MovieDetailsModel GetMovieDetails(int id);
 	}
 }
 

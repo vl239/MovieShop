@@ -8,14 +8,14 @@
     @Model.Overview
 </h3>
 
-@foreach (var trailer in Model.Trailers)
+@foreach (var trailer in @Model.Trailers)
 {
     <div>
         @trailer.Name
     </div>
 }
 
-@foreach (var genre in Model.Genres)
+@foreach (var genre in @Model.Genres)
 {
     <div>
         @genre.Name

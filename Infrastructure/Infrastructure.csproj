@@ -28,8 +28,4 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Migrations\20220616214852_CreatingFewTables.cs" />
-    <Compile Remove="Migrations\20220616214852_CreatingFewTables.Designer.cs" />
-  </ItemGroup>
 </Project>
