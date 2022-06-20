@@ -44,6 +44,11 @@ namespace Infrastructure.Services
                 movie.Trailers.Add(new TrailerModel { Id = trailer.Id, Name = trailer.Name, TrailerUrl = trailer.TrailerUrl });
             }
 
+            foreach (var cast in movieDetails.CastsOfMovie)
+            {
+                movie.Casts.Add(new CastModel { Id = cast.CastId, Name = cast.Cast.Name, Character = cast.Character, ProfilePath = cast.Cast.ProfilePath });
+            }
+
             return movie;
         }
 

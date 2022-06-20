@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -9,9 +10,17 @@ namespace MovieShopMVC.Controllers
 {
     public class CastController : Controller
     {
-        // GET: /<controller>/
-        public IActionResult Index()
+        private readonly ICastService _castService;
+
+        public CastController(ICastService castService)
         {
+            _castService = castService;
+        }
+
+        // GET: /<controller>/
+        public IActionResult Details(int id)
+        {
+            var cast = _castService.GetCastDetails(id);
             return View();
         }
     }
