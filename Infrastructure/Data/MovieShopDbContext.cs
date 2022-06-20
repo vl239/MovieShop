@@ -21,13 +21,13 @@ namespace Infrastructure.Data
 
         public DbSet<Trailer> Trailers { get; set; }
 
-        public DbSet<CastMember> CastMembers { get; set; }
+        public DbSet<Cast> Casts { get; set; }
 
-        public DbSet<MovieCastMember> MovieCastMembers { get; set; }
+        public DbSet<MovieCast> MovieCasts { get; set; }
 
-        public DbSet<CrewMember> CrewMembers { get; set; }
+        public DbSet<Crew> Crews { get; set; }
 
-        public DbSet<MovieCrewMember> MovieCrewMembers { get; set; }
+        public DbSet<MovieCrew> MovieCrews { get; set; }
 
         public DbSet<Purchase> Purchases { get; set; }
 
@@ -46,39 +46,39 @@ namespace Infrastructure.Data
         {
 			modelBuilder.Entity<Movie>(ConfigureMovie);
             modelBuilder.Entity<MovieGenre>(ConfigureMovieGenre);
-            modelBuilder.Entity<MovieCastMember>(ConfigureMovieCastMember);
-            modelBuilder.Entity<MovieCrewMember>(ConfigureMovieCrewMember);
+            modelBuilder.Entity<MovieCast>(ConfigureMovieCast);
+            modelBuilder.Entity<MovieCrew>(ConfigureMovieCrew);
             modelBuilder.Entity<Review>(ConfigureReview);
             modelBuilder.Entity<UserRole>(ConfigureUserRole);
         }
 
         private void ConfigureUserRole(EntityTypeBuilder<UserRole> builder)
         {
-            builder.ToTable("UserRole");
+            builder.ToTable("UserRoles");
             builder.HasKey(x => new { x.UserId, x.RoleId });
         }
 
         private void ConfigureReview(EntityTypeBuilder<Review> builder)
         {
-            builder.ToTable("Review");
+            builder.ToTable("Reviews");
             builder.HasKey(x => new { x.MovieId, x.UserId });
         }
 
-        private void ConfigureMovieCrewMember(EntityTypeBuilder<MovieCrewMember> builder)
+        private void ConfigureMovieCrew(EntityTypeBuilder<MovieCrew> builder)
         {
-            builder.ToTable("MovieCrewMember");
+            builder.ToTable("MovieCrews");
             builder.HasKey(x => new { x.MovieId, x.CrewId });
         }
 
-        private void ConfigureMovieCastMember(EntityTypeBuilder<MovieCastMember> builder)
+        private void ConfigureMovieCast(EntityTypeBuilder<MovieCast> builder)
         {
-            builder.ToTable("MovieCastMember");
+            builder.ToTable("MovieCasts");
             builder.HasKey(x => new { x.MovieId, x.CastId });
         }
 
         private void ConfigureMovieGenre(EntityTypeBuilder<MovieGenre> builder)
         {
-            builder.ToTable("MovieGenre");
+            builder.ToTable("MovieGenres");
             builder.HasKey(x => new { x.MovieId, x.GenreId });
         }
 
@@ -86,7 +86,7 @@ namespace Infrastructure.Data
         {
             // specify the Fluent API Rules
             // another way besides data annotations for your schema
-            builder.ToTable("Movie");
+            builder.ToTable("Movies");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Title).HasMaxLength(256);
             builder.Property(m => m.Overview).HasMaxLength(4096);

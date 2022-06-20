@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MovieShopDbContext))]
-    partial class MovieShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220619053432_FixingTableNames")]
+    partial class FixingTableNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,15 +33,19 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TmdbUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -56,15 +62,19 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TmdbUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -175,7 +185,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(512)");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -295,6 +304,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ReviewText")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MovieId", "UserId");
@@ -313,6 +323,7 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -332,10 +343,12 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(2084)
                         .HasColumnType("nvarchar(2084)");
 
                     b.Property<string>("TrailerUrl")
+                        .IsRequired()
                         .HasMaxLength(2084)
                         .HasColumnType("nvarchar(2084)");
 
@@ -354,40 +367,46 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("AccessFailedCount")
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DateOfBirth")
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HashedPassword")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("IsLocked")
+                    b.Property<bool>("IsLocked")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("LastLoginDateTime")
+                    b.Property<DateTime>("LastLoginDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("LockoutEndDate")
+                    b.Property<DateTime>("LockoutEndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Salt")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("TwoFactorEnabled")
+                    b.Property<bool>("TwoFactorEnables")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
