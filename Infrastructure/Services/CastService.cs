@@ -14,11 +14,11 @@ namespace Infrastructure.Services
 			_castRepository = castRepository;
 		}
 
-		public CastModel GetCastDetails(int id)
+		public CastDetailsModel GetCastDetails(int id)
         {
 			var castDetails = _castRepository.GetById(id);
 
-			var cast = new CastModel
+			var cast = new CastDetailsModel
 			{
 				Id = castDetails.Id,
 				Name = castDetails.Name,

@@ -12,20 +12,23 @@ namespace Infrastructure.Repositories
         {
         }
 
-        public IEnumerable<Movie> Get30HighestGrossingMovies()
+        public async Task<IEnumerable<Movie>> Get30HighestGrossingMovies()
         {
             // LINQ code to get top 30 grossing movies
             // select top 30 * from Movie order by Revenue
-            var movies = _dbContext.Movies.OrderByDescending(m => m.Revenue).Take(30).ToList();
+
+            // I/O bound operation
+            // await
+            var movies = await _dbContext.Movies.OrderByDescending(m => m.Revenue).Take(30).ToListAsync();
             return movies;
         }
 
-        public IEnumerable<Movie> Get30HighestRatedMovies()
+        public Task<IEnumerable<Movie>> Get30HighestRatedMovies()
         {
             throw new NotImplementedException();
         }
 
-        public override Movie GetById(int id)
+        public async override Task<Movie> GetById(int id)
         {
             // select * from Movie
             // join Cast and MovieCast
@@ -33,11 +36,11 @@ namespace Infrastructure.Repositories
             // join Genre and MovieGenre
             // where Id = id
             // what do you use for join?? INCLUDE METHOD
-            var movieDetails = _dbContext.Movies
+            var movieDetails = await _dbContext.Movies
                 .Include(m => m.GenresOfMovie)
                 .ThenInclude(m => m.Genre)
                 .Include(m => m.Trailers)
-                .FirstOrDefault(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             // FirstOrDefault
             // First => will throw an exception when there are no matching records

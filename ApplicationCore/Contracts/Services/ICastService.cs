@@ -5,7 +5,7 @@ namespace ApplicationCore.Contracts.Services
 {
 	public interface ICastService
 	{
-		CastModel GetCastDetails(int id);
+		CastDetailsModel GetCastDetails(int id);
 	}
 }
 

@@ -23,7 +23,7 @@ public class HomeController : Controller
     }
 
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         // home page
         // top 30 movies -> Movie Service
@@ -31,7 +31,13 @@ public class HomeController : Controller
         // newing up
         // refactor this code
         //var movieService = new MovieService();
-        var movies = _movieService.GetTopGrossingMovies();
+
+        // ASP.NET Core maintains Thread Pool => Collection of threads T1...T100 (only limited number of threads)
+        // I/O Bound operation, database over network, send the SQL and SQL will be executed on DB
+        // get back with results
+        // T1 is waiting for this operation (30 ms, 1 sec, 10 sec)
+        // for any I/O bound op => always prefer to use async/await pattern
+        var movies = await _movieService.GetTopGrossingMovies();
         // 
         // method(int x, IMovieService service);
 

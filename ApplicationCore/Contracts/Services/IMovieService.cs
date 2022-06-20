@@ -6,10 +6,10 @@ namespace ApplicationCore.Contracts.Services
 	public interface IMovieService
 	{
 		// all the business functionality methods pertaining to movies
-		List<MovieCardModel> GetTopGrossingMovies();
+		Task<List<MovieCardModel>> GetTopGrossingMovies();
 
 		// get movie details
-		MovieDetailsModel GetMovieDetails(int id);
+		Task<MovieDetailsModel> GetMovieDetails(int id);
 	}
 }
 
