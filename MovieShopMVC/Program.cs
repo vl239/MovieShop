@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Contracts.Repositories;
 using ApplicationCore.Contracts.Services;
+using ApplicationCore.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
@@ -15,6 +16,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IMovieService, MovieService>();
 //builder.Services.AddScoped<IMovieService, MovieTestService>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<IRepository<Genre>, Repository<Genre>>();
+builder.Services.AddScoped<IGenreService, GenreService>();
 
 // inject the connection string into DbContext options conustructor
 // get the connection string from app settings

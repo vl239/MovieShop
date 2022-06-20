@@ -1,6 +1,7 @@
 ﻿using System;
 using ApplicationCore.Contracts.Repositories;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -23,9 +24,11 @@ namespace Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
-            throw new NotImplementedException();
+            // get all the records from the table
+            // can use this method for getting list of all the genres
+            return await _dbContext.Set<T>().ToListAsync();
         }
 
         public virtual Task<T> GetById(int id)
