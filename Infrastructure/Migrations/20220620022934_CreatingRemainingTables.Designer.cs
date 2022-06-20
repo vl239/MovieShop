@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MovieShopDbContext))]
-    [Migration("20220619210215_FixingNullableColumns")]
-    partial class FixingNullableColumns
+    [Migration("20220620022934_CreatingRemainingTables")]
+    partial class CreatingRemainingTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
