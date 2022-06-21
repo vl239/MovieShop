@@ -14,19 +14,26 @@ namespace Infrastructure.Services
 			_castRepository = castRepository;
 		}
 
-		public CastDetailsModel GetCastDetails(int id)
+		public async Task<CastDetailsModel> GetCastDetails(int id)
         {
-			var castDetails = _castRepository.GetById(id);
+			var castDetails = await _castRepository.GetById(id);
 
 			var cast = new CastDetailsModel
 			{
 				Id = castDetails.Id,
 				Name = castDetails.Name,
+				Gender = castDetails.Gender,
+				TmdbUrl = castDetails.TmdbUrl,
 				ProfilePath = castDetails.ProfilePath
 			};
 
+            foreach (var movie in castDetails.MoviesOfCast)
+            {
+				cast.Movies.Add(new MovieCardModel { Id = movie.MovieId, PosterUrl = movie.Movie.PosterUrl, Title = movie.Movie.Title });
+            }
+
 			return cast;
         }
-	}
+    }
 }
 

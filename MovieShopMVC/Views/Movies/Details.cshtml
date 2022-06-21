@@ -1,6 +1,47 @@
 ﻿@model ApplicationCore.Models.MovieDetailsModel
 
-<h2>
+<div class="container-fluid">
+    <div class="row" style="background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url( @Model.BackdropUrl );
+        background-position: center; background-size: 100%">
+        <div class="col my-auto">
+            <img src="@Model.PosterUrl" class="img-fluid" alt="@Model.Title"/>
+        </div>
+        <div class="col py-5" style="color: white;">
+            <h2>
+                @Model.Title
+            </h2>
+            <p style="color: grey"> @Model.Tagline </p>
+            <p style="color: grey">
+                @Model.RunTime m | @Model.ReleaseDate.Value.Year 
+                @foreach (var genre in Model.Genres)
+                    {
+                        <span class="badge rounded-pill bg-secondary">@genre.Name</span>
+                    }
+            </p>
+            <p>
+                <span class="badge bg-success">@Math.Round(Model.Rating.Value,1)</span>
+            </p>
+            <p>
+                @Model.Overview
+            </p>
+        </div>
+        <div class="col py-5">
+            <div class="d-grid gap-3 col-6 mx-auto">
+                <button type="button" class="btn btn-outline-light">REVIEW</button>
+                <button type="button" class="btn btn-light">BUY @Model.Price</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+</div>
+
+
+
+
+
+@*<h2>
     @Model.Title
 </h2>
 
@@ -21,3 +62,10 @@
         @genre.Name
     </div>
 }
+
+@foreach (var cast in @Model.Casts)
+{
+    <div>
+        @cast.Name
+    </div>
+}*@

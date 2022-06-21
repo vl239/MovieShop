@@ -18,6 +18,15 @@ namespace Infrastructure.Services
         {
             var movieDetails = await _movieRepository.GetById(id);
 
+            decimal ratings_sum = 0;
+            int count = 0;
+            foreach (var review in movieDetails.Reviews)
+            {
+                ratings_sum += review.Rating;
+                count += 1;
+            }
+            decimal avg_rating = ratings_sum / count;
+
             var movie = new MovieDetailsModel
             {
                 Id = movieDetails.Id,
@@ -31,7 +40,8 @@ namespace Infrastructure.Services
                 TmdbUrl = movieDetails.TmdbUrl,
                 Revenue = movieDetails.Revenue,
                 Budget = movieDetails.Budget,
-                ReleaseDate = movieDetails.ReleaseDate
+                ReleaseDate = movieDetails.ReleaseDate,
+                Rating = avg_rating
             };
 
             foreach (var genre in movieDetails.GenresOfMovie)

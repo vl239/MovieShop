@@ -40,6 +40,9 @@ namespace Infrastructure.Repositories
                 .Include(m => m.GenresOfMovie)
                 .ThenInclude(m => m.Genre)
                 .Include(m => m.Trailers)
+                .Include(m => m.CastsOfMovie)
+                .ThenInclude(m => m.Cast)
+                .Include(m => m.Reviews)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             // FirstOrDefault

@@ -23,7 +23,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link text-dark dropdown-toggle" href="#" id="dropdownMenuButton1" data-bs-toggle="collapse">Genres</a>
+                            <a class="nav-link text-dark dropdown-toggle" href="#" id="dropdownMenuButton1" data-bs-toggle="dropdown">Genres</a>
                             <div class="dropdown-menu">
                                 @*call the genre view component*@
                                 @await Component.InvokeAsync("Genres") 
