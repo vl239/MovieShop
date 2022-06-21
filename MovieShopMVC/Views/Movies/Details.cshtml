@@ -12,15 +12,15 @@
             </h2>
             <p style="color: grey"> @Model.Tagline </p>
             <p style="color: grey">
-                @Model.RunTime m | @Model.ReleaseDate.Value.Year
+                @Model.RunTime m | @Model.ReleaseDate.Value.Year &ensp;
                 @foreach (var genre in Model.Genres)
                 {
                     <span class="badge rounded-pill bg-secondary">@genre.Name</span>
                 }
             </p>
-            <p>
-                <span class="badge bg-success">@Math.Round(Model.Rating.Value, 1)</span>
-            </p>
+            <h4>
+                <span class="badge bg-success my-2">@Math.Round(Model.Rating.Value, 1)</span>
+            </h4>
             <p>
                 @Model.Overview
             </p>
@@ -89,15 +89,15 @@
         </div>
     </div>
     <div class="row my-2">
-        <div class="col-4">
+        <div class="col-5">
             <div class="my-3">
                 <h5>MOVIE FACTS</h5>
                 <hr />
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Release Date <span class="badge rounded-pill bg-dark">@Model.ReleaseDate</span></li>
+                    <li class="list-group-item">Release Date <span class="badge rounded-pill bg-dark">@Model.ReleaseDate.Value.ToString("MMMM dd, yyyy")</span></li>
                     <li class="list-group-item">Run Time <span class="badge rounded-pill bg-dark">@Model.RunTime m</span></li>
-                    <li class="list-group-item">Box Office <span class="badge rounded-pill bg-dark">$@Model.Revenue</span></li>
-                    <li class="list-group-item">Budget <span class="badge rounded-pill bg-dark">$@Model.Budget</span></li>
+                    <li class="list-group-item">Box Office <span class="badge rounded-pill bg-dark">@Model.Revenue.Value.ToString("C")</span></li>
+                    <li class="list-group-item">Budget <span class="badge rounded-pill bg-dark">@Model.Budget.Value.ToString("C")</span></li>
                 </ul>
             </div>
             <div class="my-3">
@@ -111,18 +111,21 @@
                 </ul>
             </div>
          </div>
-        <div class="col-8">
+        <div class="col-7">
             <div class="my-3">
                 <h5>CAST</h5>
                 <hr />
-                <ul class="list-group list-group-flush">
                     @foreach (var cast in Model.Casts)
-                    {
-                        <li class="list-group-item">
-                            <p><img src="@cast.ProfilePath" class="rounded-circle" alt="@cast.Name" /> &emsp; @cast.Name &emsp; @cast.Character</p>
-                        </li>
-                    }
-                </ul>
+                        {
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item border-0 py-0">
+                                    <img src="@cast.ProfilePath" class="rounded-circle" alt="@cast.Name" style="height:75px;" />
+                                </li>
+                                <li class="list-group-item my-auto pl-2 py-0 border-0" style="min-width: 250px">@cast.Name</li>
+                                <li class="list-group-item my-auto py-0 border-0">@cast.Character</li>
+                            </ul>
+                            <hr />
+                        }
             </div>
 
         </div>
