@@ -20,12 +20,16 @@ namespace Infrastructure.Services
 
             decimal ratings_sum = 0;
             int count = 0;
+            decimal avg_rating = 0;
             foreach (var review in movieDetails.Reviews)
             {
                 ratings_sum += review.Rating;
                 count += 1;
             }
-            decimal avg_rating = ratings_sum / count;
+            if (count != 0)
+            {
+                avg_rating = ratings_sum / count;
+            }
 
             var movie = new MovieDetailsModel
             {
