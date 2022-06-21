@@ -4,7 +4,7 @@
     <div class="row" style="background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url( @Model.BackdropUrl );
         background-position: center; background-size: 100%">
         <div class="col my-auto">
-            <img src="@Model.PosterUrl" class="img-fluid" alt="@Model.Title"/>
+            <img src="@Model.PosterUrl" class="img-fluid" alt="@Model.Title" />
         </div>
         <div class="col py-5" style="color: white;">
             <h2>
@@ -12,14 +12,14 @@
             </h2>
             <p style="color: grey"> @Model.Tagline </p>
             <p style="color: grey">
-                @Model.RunTime m | @Model.ReleaseDate.Value.Year 
+                @Model.RunTime m | @Model.ReleaseDate.Value.Year
                 @foreach (var genre in Model.Genres)
-                    {
-                        <span class="badge rounded-pill bg-secondary">@genre.Name</span>
-                    }
+                {
+                    <span class="badge rounded-pill bg-secondary">@genre.Name</span>
+                }
             </p>
             <p>
-                <span class="badge bg-success">@Math.Round(Model.Rating.Value,1)</span>
+                <span class="badge bg-success">@Math.Round(Model.Rating.Value, 1)</span>
             </p>
             <p>
                 @Model.Overview
@@ -27,45 +27,135 @@
         </div>
         <div class="col py-5">
             <div class="d-grid gap-3 col-6 mx-auto">
-                <button type="button" class="btn btn-outline-light">REVIEW</button>
-                <button type="button" class="btn btn-light">BUY @Model.Price</button>
+                <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#review">REVIEW</button>
+                <div class="modal fade" id="review" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">New Review</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Rating
+                                        </button><br />
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><a class="dropdown-item" href="#">1</a></li>
+                                            <li><a class="dropdown-item" href="#">2</a></li>
+                                            <li><a class="dropdown-item" href="#">3</a></li>
+                                            <li><a class="dropdown-item" href="#">4</a></li>
+                                            <li><a class="dropdown-item" href="#">5</a></li>
+                                            <li><a class="dropdown-item" href="#">6</a></li>
+                                            <li><a class="dropdown-item" href="#">7</a></li>
+                                            <li><a class="dropdown-item" href="#">8</a></li>
+                                            <li><a class="dropdown-item" href="#">9</a></li>
+                                            <li><a class="dropdown-item" href="#">10</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">Review:</label>
+                                        <textarea class="form-control" id="message-text"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Submit Review</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#buy">BUY $@Model.Price</button>
+                <div class="modal fade" id="buy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Buy Movie</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Purchase @Model.Title for $@Model.Price.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Purchase</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row my-2">
+        <div class="col-4">
+            <div class="my-3">
+                <h5>MOVIE FACTS</h5>
+                <hr />
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Release Date <span class="badge rounded-pill bg-dark">@Model.ReleaseDate</span></li>
+                    <li class="list-group-item">Run Time <span class="badge rounded-pill bg-dark">@Model.RunTime m</span></li>
+                    <li class="list-group-item">Box Office <span class="badge rounded-pill bg-dark">$@Model.Revenue</span></li>
+                    <li class="list-group-item">Budget <span class="badge rounded-pill bg-dark">$@Model.Budget</span></li>
+                </ul>
+            </div>
+            <div class="my-3">
+                <h5>TRAILERS</h5>
+                <hr />
+                <ul class="list-group list-group-flush">
+                    @foreach (var trailer in Model.Trailers)
+                        {
+                            <li class="list-group-item"><a href="@trailer.TrailerUrl" style="color: black">@Model.Title Trailer</a></li>
+                        }
+                </ul>
+            </div>
+         </div>
+        <div class="col-8">
+            <div class="my-3">
+                <h5>CAST</h5>
+                <hr />
+                <ul class="list-group list-group-flush">
+                    @foreach (var cast in Model.Casts)
+                    {
+                        <li class="list-group-item">
+                            <p><img src="@cast.ProfilePath" class="rounded-circle" alt="@cast.Name" /> &emsp; @cast.Name &emsp; @cast.Character</p>
+                        </li>
+                    }
+                </ul>
+            </div>
 
+        </div>
     </div>
 </div>
 
 
 
-
-
 @*<h2>
-    @Model.Title
-</h2>
+        @Model.Title
+    </h2>
 
-<h3>
-    @Model.Overview
-</h3>
+    <h3>
+        @Model.Overview
+    </h3>
 
-@foreach (var trailer in @Model.Trailers)
-{
-    <div>
-        @trailer.Name
-    </div>
-}
+    @foreach (var trailer in @Model.Trailers)
+    {
+        <div>
+            @trailer.Name
+        </div>
+    }
 
-@foreach (var genre in @Model.Genres)
-{
-    <div>
-        @genre.Name
-    </div>
-}
+    @foreach (var genre in @Model.Genres)
+    {
+        <div>
+            @genre.Name
+        </div>
+    }
 
-@foreach (var cast in @Model.Casts)
-{
-    <div>
-        @cast.Name
-    </div>
-}*@
+    @foreach (var cast in @Model.Casts)
+    {
+        <div>
+            @cast.Name
+        </div>
+    }*@

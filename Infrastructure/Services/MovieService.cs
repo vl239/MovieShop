@@ -41,7 +41,8 @@ namespace Infrastructure.Services
                 Revenue = movieDetails.Revenue,
                 Budget = movieDetails.Budget,
                 ReleaseDate = movieDetails.ReleaseDate,
-                Rating = avg_rating
+                Rating = avg_rating,
+                Price = movieDetails.Price
             };
 
             foreach (var genre in movieDetails.GenresOfMovie)
