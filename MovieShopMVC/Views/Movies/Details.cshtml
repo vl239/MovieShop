@@ -115,19 +115,21 @@
             <div class="my-3">
                 <h5>CAST</h5>
                 <hr />
-                    @foreach (var cast in Model.Casts)
-                        {
-                            <ul class="list-group list-group-horizontal">
-                                <li class="list-group-item border-0 py-0">
-                                    <img src="@cast.ProfilePath" class="rounded-circle" alt="@cast.Name" style="height:75px;" />
-                                </li>
-                                <li class="list-group-item my-auto pl-2 py-0 border-0" style="min-width: 250px">@cast.Name</li>
-                                <li class="list-group-item my-auto py-0 border-0">@cast.Character</li>
-                            </ul>
-                            <hr />
-                        }
+                @foreach (var cast in Model.Casts)
+                    {
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item border-0 py-0">
+                                <img src="@cast.ProfilePath" class="rounded-circle" alt="@cast.Name" style="height:75px;" />
+                            </li>
+                            <li class="list-group-item my-auto pl-2 py-0 border-0" style="min-width: 250px">
+                                <a asp-controller="Cast" asp-action="Details" asp-route-id="@cast.Id" style="color: black;">
+                                    @cast.Name</a>
+                            </li>
+                            <li class="list-group-item my-auto py-0 border-0">@cast.Character</li>
+                        </ul>
+                        <hr />
+                    }
             </div>
-
         </div>
     </div>
 </div>

@@ -1,0 +1,25 @@
+﻿@model ApplicationCore.Models.CastDetailsModel
+
+<div class="container-fluid">
+    <div class="row" style="background-color: black">
+        <div class="col my-auto" style="display: flex; justify-content: center;">
+            <img src="@Model.ProfilePath" class="img-fluid" alt="@Model.Name" style="height: 300px;"/>
+        </div>
+        <div class="col py-5" style="color: white;">
+            <h2>
+                @Model.Name
+            </h2>
+            <p>Gender: @Model.Gender</p>
+            <p><a href="@Model.TmdbUrl" target="_blank" style="color:white;">Click for complete @Model.Name info</a></p>
+        </div>
+    </div>
+    <div class="row my-3">
+        <h1>Known For</h1>
+        @foreach (var movie in Model.Movies)
+        {
+            <div class="col-xl-2 col-lg-3 col-sm-4 col-6">
+                <partial name="_MovieCard" model="movie" />
+            </div>
+        }
+    </div>
+</div>

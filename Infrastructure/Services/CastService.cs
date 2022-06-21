@@ -18,11 +18,25 @@ namespace Infrastructure.Services
         {
 			var castDetails = await _castRepository.GetById(id);
 
+			string gender = "";
+			if (castDetails.Gender == "1")
+            {
+				gender = "Female";
+            }
+			else if (castDetails.Gender == "2")
+			{
+				gender = "Male";
+            }
+			else
+            {
+				gender = "Non-binary";
+            }
+
 			var cast = new CastDetailsModel
 			{
 				Id = castDetails.Id,
 				Name = castDetails.Name,
-				Gender = castDetails.Gender,
+				Gender = gender,
 				TmdbUrl = castDetails.TmdbUrl,
 				ProfilePath = castDetails.ProfilePath
 			};
