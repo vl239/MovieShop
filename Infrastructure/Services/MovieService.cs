@@ -82,6 +82,6 @@ namespace Infrastructure.Services
 
             return movieCards;
         }
-	}
+    }
 }
 
