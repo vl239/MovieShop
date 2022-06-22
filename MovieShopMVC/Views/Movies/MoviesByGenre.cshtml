@@ -1,5 +1,10 @@
 ﻿@model List<ApplicationCore.Models.MovieCardModel>
 
+@{
+    ViewData["Title"] = "Movies by Genre";
+}
+
+
 <div class="container-fluid">
     <div class="row">
         @foreach (var movie in Model)
