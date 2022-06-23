@@ -8,7 +8,7 @@ namespace ApplicationCore.Contracts.Services
 
 		Task<bool> RegisterUser(UserRegisterModel model);
 
-		Task<bool> ValidateUser(string meail, string password);
+		Task<UserModel> ValidateUser(string meail, string password);
 	}
 }
 

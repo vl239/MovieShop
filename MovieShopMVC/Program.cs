@@ -4,6 +4,7 @@ using ApplicationCore.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +32,16 @@ builder.Services.AddDbContext<MovieShopDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MovieShopDbConnection"));
 });
 
+// set Cookies based authentication info
+// Cookie, JWT
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        // setting for cookie
+        options.Cookie.Name = "MovieShopAuthCookie";
+        options.ExpireTimeSpan = TimeSpan.FromHours(2);
+        options.LoginPath = "/account/login";
+    });
 
 var app = builder.Build();
 
@@ -47,6 +58,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// *** AUTHENTICATION MIDDLEWARE ***
+// looked for cookie, decrypted the cookie, and added to object
+// if cookie doesn't exit => login page
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
