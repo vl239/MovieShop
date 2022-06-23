@@ -12,6 +12,8 @@
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="Microsoft.EntityFrameworkCore.Design" />
     <None Remove="Data\" />
+    <None Remove="Microsoft.AspNetCore.Cryptography.KeyDerivation" />
+    <None Remove="System.Security.Cryptography.Cng" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
@@ -27,5 +29,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="6.0.6" />
+    <PackageReference Include="System.Security.Cryptography.Cng" Version="5.0.0" />
   </ItemGroup>
 </Project>

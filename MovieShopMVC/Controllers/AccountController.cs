@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore.Contracts.Services;
 using ApplicationCore.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,13 @@ namespace MovieShopMVC.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IAccountService _accountService;
+
+        public AccountController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
+
         [HttpGet]
         public async Task<IActionResult> Login()
         {
@@ -19,7 +27,13 @@ namespace MovieShopMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserLoginModel model)
         {
-            return View();
+            var isValidPassword = await _accountService.ValidateUser(model.Email, model.Password);
+            if (isValidPassword == true)
+            {
+                //redirect to home page
+                return LocalRedirect("~/");
+            }
+            return View(model);
         }
 
         [HttpGet]
@@ -34,7 +48,9 @@ namespace MovieShopMVC.Controllers
         {
             // model binding (case insensitive)
             // NAMES are posted
-            return View();
+            var user = await _accountService.RegisterUser(model);
+            // redirect to login page
+            return RedirectToAction("Login");
         }
     }
 }
