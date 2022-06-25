@@ -8,9 +8,9 @@ namespace Infrastructure.Services
 {
 	public class GenreService : IGenreService
 	{
-        private readonly IGenreRepository _genreRepository;
+        private readonly IRepository<Genre> _genreRepository;
 
-        public GenreService(IGenreRepository genreRepository)
+        public GenreService(IRepository<Genre> genreRepository)
         {
             _genreRepository = genreRepository;
         }
@@ -22,20 +22,6 @@ namespace Infrastructure.Services
             var genresModel = genres.Select(g => new GenreModel { Id = g.Id, Name = g.Name });
 
             return genresModel;
-        }
-
-        public async Task<List<MovieCardModel>> GetMoviesByGenre(int id)
-        {
-            var moviesOfGenre = await _genreRepository.GetMoviesOfGenre(id);
-
-            var movieCards = new List<MovieCardModel>();
-
-            foreach (var movie in moviesOfGenre)
-            {
-                movieCards.Add(new MovieCardModel { Id = movie.MovieId, PosterUrl = movie.Movie.PosterUrl, Title = movie.Movie.Title });
-            }
-
-            return movieCards;
         }
     }
 }

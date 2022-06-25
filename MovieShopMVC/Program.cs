@@ -6,6 +6,7 @@ using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using MovieShopMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,15 +16,17 @@ builder.Services.AddControllersWithViews();
 // DI is first class citizen in .NET Core
 // older.NET Framework DIR was not builtin, we had to rely on thrid party libraries, autofac, ninject
 builder.Services.AddScoped<IMovieService, MovieService>();
-//builder.Services.AddScoped<IMovieService, MovieTestService>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IGenreService, GenreService>();
-builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+builder.Services.AddScoped<IRepository<Genre>, Repository<Genre>>();
 builder.Services.AddScoped<ICastService, CastService>();
 builder.Services.AddScoped<ICastRepository, CastRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<ICurrentLoggedInUser, CurrentLoggedInUser>();
 
+// Inject HttpContext for IHttpContextAccessor interface
+builder.Services.AddHttpContextAccessor();
 
 // inject the connection string into DbContext options conustructor
 // get the connection string from app settings

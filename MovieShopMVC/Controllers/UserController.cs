@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MovieShopMVC.Services;
 
 
 namespace MovieShopMVC.Controllers
@@ -12,6 +13,13 @@ namespace MovieShopMVC.Controllers
     public class UserController : Controller
     {
         // all these action methods should only be executed when user is logged in
+
+        private readonly ICurrentLoggedInUser _currentLogedInUser;
+
+        public UserController(ICurrentLoggedInUser currentLogedInUser)
+        {
+            _currentLogedInUser = currentLogedInUser;
+        }
 
         [HttpGet]
         // write a code that will check if user is authenticated
@@ -22,6 +30,8 @@ namespace MovieShopMVC.Controllers
             // var cookie = this.HttpContext.Request.Cookies["MovieShopAuthCookie"];
             // can create a class that exposes HttpContext cookie decrypted info and claims
             // HttpContext decrypts claims automatically
+            var userId = _currentLogedInUser.UserId;
+            // use the UserId and send to User Service to get information for that User 
             return View();
         }
 
@@ -45,6 +55,12 @@ namespace MovieShopMVC.Controllers
 
         [HttpPost]
         public async Task<IActionResult> BuyMovie()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile()
         {
             return View();
         }

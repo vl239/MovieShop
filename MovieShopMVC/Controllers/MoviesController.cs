@@ -11,12 +11,13 @@ namespace MovieShopMVC.Controllers
     public class MoviesController : Controller
     {
         private readonly IMovieService _movieService;
-        private readonly IGenreService _genreService;
+        //private readonly IGenreService _genreService;
 
-        public MoviesController(IMovieService movieService, IGenreService genreService)
+        //public MoviesController(IMovieService movieService, IGenreService genreService)
+        public MoviesController(IMovieService movieService)
         {
             _movieService = movieService;
-            _genreService = genreService;
+            //_genreService = genreService;
         }
 
         // showing details of the movie
@@ -26,11 +27,11 @@ namespace MovieShopMVC.Controllers
             return View(movie);
         }
 
-        public async Task<IActionResult> MoviesByGenre(int id, int pageSize = 30, int pageNumber = 1)
+        public async Task<IActionResult> Genre(int id, int pageSize = 30, int pageNumber = 1)
         {
-            var ResultSet = await _genreService.GetMoviesByGenre(id);
-            var PaginatedResultSet = ResultSet.Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
-            return View(PaginatedResultSet);
+            // call movie Service and get the data
+            var pagedMovies = await _movieService.GetMoviesByGenre(id, pageSize, pageNumber);
+            return View("PagedMovies", pagedMovies);
         }
     }
 }

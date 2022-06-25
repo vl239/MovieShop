@@ -7,7 +7,7 @@ namespace ApplicationCore.Contracts.Services
 	{
 		Task<IEnumerable<GenreModel>> GetAllGenres();
 
-		Task<List<MovieCardModel>> GetMoviesByGenre(int id);
+		//Task<List<MovieCardModel>> GetMoviesByGenre(int id);
 	}
 }
 

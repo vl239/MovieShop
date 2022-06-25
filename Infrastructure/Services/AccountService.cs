@@ -61,7 +61,7 @@ namespace Infrastructure.Services
             var user = await _userRepository.GetUserByEmail(email);
             if (user == null)
             {
-                throw new Exception("Email does not exists");
+                throw new ConflictException("Email does not exist.");
             }
 
             var hashedPassword = GetHashedPassword(password, user.Salt);
