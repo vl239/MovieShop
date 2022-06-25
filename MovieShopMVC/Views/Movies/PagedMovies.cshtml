@@ -24,16 +24,30 @@
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 
-<a class="btn btn-primary @previousDisabled" asp-action="Genre" asp-controller="Movies" asp-route-pageNumber="@(Model.PageNumber-1)">
-    Previous
-</a>
+<nav>
+    <ul class="pagination flex-wrap">
+        <li class="page-item">
+            <a class="btn btn-primary @previousDisabled" asp-action="Genre" asp-controller="Movies" asp-route-pageNumber="@(Model.PageNumber-1)">
+                &laquo;
+            </a>
+        </li>
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item"><a class="page-link" asp-action="Genre" asp-controller="Movies" asp-route-pageNumber="@i">@i</a></li>
+        }
+        <li class="page-item">
+            <a class="btn btn-primary @nextDisabled" asp-action="Genre" asp-controller="Movies" asp-route-pageNumber="@(Model.PageNumber + 1)">
+                &raquo;
+            </a>
+        </li>
+    </ul>
+</nav>
 
-<a class="btn btn-primary @nextDisabled" asp-action="Genre" asp-controller="Movies" asp-route-pageNumber="@(Model.PageNumber + 1)">
-    Next
-</a>
 
 @*or*@
 
 @*Display all the page numbers 1000 records 1000/30 => 34 pages 1 2 3 ......34*
     When you are on first Page then disable First Page, when on last page disable last 34 page button
 *@
+
+
