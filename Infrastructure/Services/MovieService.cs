@@ -18,18 +18,25 @@ namespace Infrastructure.Services
         {
             var movieDetails = await _movieRepository.GetById(id);
 
-            decimal ratings_sum = 0;
-            int count = 0;
-            decimal avg_rating = 0;
-            foreach (var review in movieDetails.Reviews)
+            //decimal ratings_sum = 0;
+            //int count = 0;
+            //decimal avg_rating = 0;
+            //foreach (var review in movieDetails.Reviews)
+            //{
+            //    ratings_sum += review.Rating;
+            //    count += 1;
+            //}
+            //if (count != 0)
+            //{
+            //    avg_rating = ratings_sum / count;
+            //}
+
+            int rating_count = movieDetails.Reviews.Select(r => r.Rating).Count();
+            decimal rating = 0;
+            if (rating_count != 0)
             {
-                ratings_sum += review.Rating;
-                count += 1;
-            }
-            if (count != 0)
-            {
-                avg_rating = ratings_sum / count;
-            }
+                rating = movieDetails.Reviews.Select(r => r.Rating).Average();
+            };            
 
             var movie = new MovieDetailsModel
             {
@@ -45,7 +52,8 @@ namespace Infrastructure.Services
                 Revenue = movieDetails.Revenue,
                 Budget = movieDetails.Budget,
                 ReleaseDate = movieDetails.ReleaseDate,
-                Rating = avg_rating,
+                Rating = rating,
+                //Rating = movieDetails.Reviews.Select(r => r.Rating).Average(),
                 Price = movieDetails.Price
             };
 
