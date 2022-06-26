@@ -10,27 +10,56 @@ namespace Infrastructure.Services
     {
         public readonly IUserRepository _userRepository;
         public readonly IRepository<Favorite> _favoriteRepository;
+        public readonly IRepository<Review> _reviewRepository;
 
-        public UserService(IUserRepository userRepository, IRepository<Favorite> favoriteRepository)
+        public UserService(IUserRepository userRepository, IRepository<Favorite> favoriteRepository, IRepository<Review> reviewRepository)
         {
             _userRepository = userRepository;
             _favoriteRepository = favoriteRepository;
+            _reviewRepository = reviewRepository;
         }
 
 
-        public async Task AddFavorite(FavoriteRequestModel favoriteRequest)
+        public async Task<bool> AddFavorite(FavoriteRequestModel favoriteRequest)
         {
-            throw new NotImplementedException();
+            if (await FavoriteExists(favoriteRequest.UserId, favoriteRequest.MovieId) == false)
+            {
+                var newFavorite = new Favorite
+                {
+                    Id = favoriteRequest.Id,
+                    MovieId = favoriteRequest.MovieId,
+                    UserId = favoriteRequest.UserId
+                };
+
+                var savedFavorite = await _favoriteRepository.Add(newFavorite);
+                return true;
+            }
+            return false;
         }
 
         public async Task AddMovieReview(ReviewRequestModel reviewRequest)
         {
-            throw new NotImplementedException();
+            var newReview = new Review
+            {
+                MovieId = reviewRequest.MovieId,
+                UserId = reviewRequest.UserId,
+                Rating = reviewRequest.Rating,
+                ReviewText = reviewRequest.ReviewText
+            };
+
+            var savedReview = await _reviewRepository.Add(newReview);
         }
 
-        public async Task DeleteMovieReview(int userId, int movieId)
+        public async Task<bool> DeleteMovieReview(int userId, int movieId)
         {
-            throw new NotImplementedException();
+            var reviews = await GetAllReviewsByUser(userId);
+            var deleteReview = reviews.FirstOrDefault(r => r.MovieId == movieId);
+            if (deleteReview != null)
+            {
+                var deletedReview = await _reviewRepository.Delete(deleteReview);
+                return true;
+            }
+            return false;
         }
 
         public async Task<bool> FavoriteExists(int id, int movieId)
@@ -91,9 +120,16 @@ namespace Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public async Task RemoveFavorite(FavoriteRequestModel favoriteRequest)
+        public async Task<bool> RemoveFavorite(FavoriteRequestModel favoriteRequest)
         {
-            throw new NotImplementedException();
+            var favorites = await GetAllFavoritesForUser(favoriteRequest.UserId);
+            var removeFavorite = favorites.FirstOrDefault(f => f.MovieId == favoriteRequest.MovieId);
+            if (removeFavorite != null)
+            {
+                var removedFavorite = await _favoriteRepository.Delete(removeFavorite);
+                return true;
+            }
+            return false;
         }
 
         public async Task UpdateMovieReview(ReviewRequestModel reviewRequest)

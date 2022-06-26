@@ -14,9 +14,9 @@ namespace ApplicationCore.Contracts.Services
 
 		Task GetPurchasesDetails(int userId, int movieId);
 
-		Task AddFavorite(FavoriteRequestModel favoriteRequest);
+		Task<bool> AddFavorite(FavoriteRequestModel favoriteRequest);
 
-		Task RemoveFavorite(FavoriteRequestModel favoriteRequest);
+		Task<bool> RemoveFavorite(FavoriteRequestModel favoriteRequest);
 
 		Task<bool> FavoriteExists(int id, int movieId);
 
@@ -26,7 +26,7 @@ namespace ApplicationCore.Contracts.Services
 
 		Task UpdateMovieReview(ReviewRequestModel reviewRequest);
 
-		Task DeleteMovieReview(int userId, int movieId);
+		Task<bool> DeleteMovieReview(int userId, int movieId);
 
 		Task<IEnumerable<Review>> GetAllReviewsByUser(int id);
 	}
