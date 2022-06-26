@@ -14,11 +14,11 @@ namespace MovieShopMVC.Controllers
     {
         // all these action methods should only be executed when user is logged in
 
-        private readonly ICurrentLoggedInUser _currentLogedInUser;
+        private readonly ICurrentLoggedInUser _currentLoggedInUser;
 
-        public UserController(ICurrentLoggedInUser currentLogedInUser)
+        public UserController(ICurrentLoggedInUser currentLoggedInUser)
         {
-            _currentLogedInUser = currentLogedInUser;
+            _currentLoggedInUser = currentLoggedInUser;
         }
 
         [HttpGet]
@@ -30,7 +30,7 @@ namespace MovieShopMVC.Controllers
             // var cookie = this.HttpContext.Request.Cookies["MovieShopAuthCookie"];
             // can create a class that exposes HttpContext cookie decrypted info and claims
             // HttpContext decrypts claims automatically
-            var userId = _currentLogedInUser.UserId;
+            var userId = _currentLoggedInUser.UserId;
             // use the UserId and send to User Service to get information for that User 
             return View();
         }
