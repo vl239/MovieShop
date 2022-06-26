@@ -66,7 +66,7 @@ namespace Infrastructure.Services
             var favorites = await GetAllFavoritesForUser(id);
             foreach (var favorite in favorites)
             {
-                if (favorite.UserId == id && favorite.MovieId == movieId)
+                if (favorite.Id == movieId)
                 {
                     return true;
                 }
@@ -74,10 +74,17 @@ namespace Infrastructure.Services
             return false;
         }
 
-        public async Task<IEnumerable<Favorite>> GetAllFavoritesForUser(int id)
+        public async Task<List<MovieCardModel>> GetAllFavoritesForUser(int id)
         {
             var user = await _userRepository.GetById(id);
-            return user.Favorites;
+            var favorites = user.Favorites;
+            var movieCards = new List<MovieCardModel>();
+
+            foreach (var favorite in favorites)
+            {
+                movieCards.Add(new MovieCardModel { Id = favorite.MovieId, PosterUrl = favorite.Movie.PosterUrl, Title = favorite.Movie.Title });
+            }
+            return movieCards;
         }
 
         public async Task<List<MovieCardModel>> GetAllPurchasesForUser(int id)
@@ -101,7 +108,8 @@ namespace Infrastructure.Services
 
         public async Task<Purchase> GetPurchasesDetails(int userId, int movieId)
         {
-            var purchases = await GetAllPurchasesForUser(userId);
+            var user = await _userRepository.GetById(userId);
+            var purchases = user.Purchases;
             var purchaseDetails = purchases.FirstOrDefault(p => p.MovieId == movieId);
             return purchaseDetails;
         }
@@ -111,7 +119,7 @@ namespace Infrastructure.Services
             var purchases = await GetAllPurchasesForUser(userId);
             foreach (var purchase in purchases)
             {
-                if (purchase.Id == purchaseRequest.Id)
+                if (purchase.Id == purchaseRequest.MovieId)
                 {
                     return true;
                 }
@@ -140,7 +148,8 @@ namespace Infrastructure.Services
 
         public async Task<bool> RemoveFavorite(FavoriteRequestModel favoriteRequest)
         {
-            var favorites = await GetAllFavoritesForUser(favoriteRequest.UserId);
+            var user = await _userRepository.GetById(favoriteRequest.UserId);
+            var favorites = user.Favorites;
             var removeFavorite = favorites.FirstOrDefault(f => f.MovieId == favoriteRequest.MovieId);
             if (removeFavorite != null)
             {

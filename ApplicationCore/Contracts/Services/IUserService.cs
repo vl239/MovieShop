@@ -10,7 +10,7 @@ namespace ApplicationCore.Contracts.Services
 
 		Task<bool> IsMoviePurchased(PurchaseRequestModel purchaseRequest, int userId);
 
-		Task<IEnumerable<Purchase>> GetAllPurchasesForUser(int id);
+		Task<List<MovieCardModel>> GetAllPurchasesForUser(int id);
 
 		Task<Purchase> GetPurchasesDetails(int userId, int movieId);
 
@@ -20,7 +20,7 @@ namespace ApplicationCore.Contracts.Services
 
 		Task<bool> FavoriteExists(int id, int movieId);
 
-		Task<IEnumerable<Favorite>> GetAllFavoritesForUser(int id);
+		Task<List<MovieCardModel>> GetAllFavoritesForUser(int id);
 
 		Task AddMovieReview(ReviewRequestModel reviewRequest);
 

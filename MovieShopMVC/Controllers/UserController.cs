@@ -34,15 +34,17 @@ namespace MovieShopMVC.Controllers
             // can create a class that exposes HttpContext cookie decrypted info and claims
             // HttpContext decrypts claims automatically
             var userId = _currentLoggedInUser.UserId;
-            var moviePurchases = await _userService.GetAllPurchasesForUser(userId);
+            var purchasedMovies = await _userService.GetAllPurchasesForUser(userId);
             // use the UserId and send to User Service to get information for that User 
-            return View(moviePurchases);
+            return View(purchasedMovies);
         }
 
         [HttpGet]
         public async Task<IActionResult> Favorites()
         {
-            return View();
+            var userId = _currentLoggedInUser.UserId;
+            var favoriteMovies = await _userService.GetAllFavoritesForUser(userId);
+            return View(favoriteMovies);
         }
 
         [HttpPost]
