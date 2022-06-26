@@ -80,10 +80,17 @@ namespace Infrastructure.Services
             return user.Favorites;
         }
 
-        public async Task<IEnumerable<Purchase>> GetAllPurchasesForUser(int id)
+        public async Task<List<MovieCardModel>> GetAllPurchasesForUser(int id)
         {
             var user = await _userRepository.GetById(id);
-            return user.Purchases;
+            var purchases = user.Purchases;
+            var movieCards = new List<MovieCardModel>();
+
+            foreach (var purchase in purchases)
+            {
+                movieCards.Add(new MovieCardModel { Id = purchase.MovieId, PosterUrl = purchase.Movie.PosterUrl, Title = purchase.Movie.Title });
+            }
+            return movieCards;
         }
 
         public async Task<IEnumerable<Review>> GetAllReviewsByUser(int id)

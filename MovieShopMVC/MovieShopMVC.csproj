@@ -24,6 +24,7 @@
     <None Remove="Views\Account\" />
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <None Remove="Services\" />
+    <None Remove="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
@@ -44,5 +45,6 @@
     <Folder Include="Views\Cast\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Services\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
 </Project>

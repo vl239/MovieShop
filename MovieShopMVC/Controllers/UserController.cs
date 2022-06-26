@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore.Contracts.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieShopMVC.Services;
@@ -15,10 +16,12 @@ namespace MovieShopMVC.Controllers
         // all these action methods should only be executed when user is logged in
 
         private readonly ICurrentLoggedInUser _currentLoggedInUser;
+        private readonly IUserService _userService;
 
-        public UserController(ICurrentLoggedInUser currentLoggedInUser)
+        public UserController(ICurrentLoggedInUser currentLoggedInUser, IUserService userService)
         {
             _currentLoggedInUser = currentLoggedInUser;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -31,8 +34,9 @@ namespace MovieShopMVC.Controllers
             // can create a class that exposes HttpContext cookie decrypted info and claims
             // HttpContext decrypts claims automatically
             var userId = _currentLoggedInUser.UserId;
+            var moviePurchases = await _userService.GetAllPurchasesForUser(userId);
             // use the UserId and send to User Service to get information for that User 
-            return View();
+            return View(moviePurchases);
         }
 
         [HttpGet]
