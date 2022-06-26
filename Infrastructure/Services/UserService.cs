@@ -11,14 +11,15 @@ namespace Infrastructure.Services
         public readonly IUserRepository _userRepository;
         public readonly IRepository<Favorite> _favoriteRepository;
         public readonly IRepository<Review> _reviewRepository;
+        public readonly IPurchaseRepository _purchaseRepository;
 
-        public UserService(IUserRepository userRepository, IRepository<Favorite> favoriteRepository, IRepository<Review> reviewRepository)
+        public UserService(IUserRepository userRepository, IRepository<Favorite> favoriteRepository, IRepository<Review> reviewRepository, IPurchaseRepository purchaseRepository)
         {
             _userRepository = userRepository;
             _favoriteRepository = favoriteRepository;
             _reviewRepository = reviewRepository;
+            _purchaseRepository = purchaseRepository;
         }
-
 
         public async Task<bool> AddFavorite(FavoriteRequestModel favoriteRequest)
         {
@@ -30,7 +31,6 @@ namespace Infrastructure.Services
                     MovieId = favoriteRequest.MovieId,
                     UserId = favoriteRequest.UserId
                 };
-
                 var savedFavorite = await _favoriteRepository.Add(newFavorite);
                 return true;
             }
@@ -46,7 +46,6 @@ namespace Infrastructure.Services
                 Rating = reviewRequest.Rating,
                 ReviewText = reviewRequest.ReviewText
             };
-
             var savedReview = await _reviewRepository.Add(newReview);
         }
 
@@ -78,27 +77,26 @@ namespace Infrastructure.Services
         public async Task<IEnumerable<Favorite>> GetAllFavoritesForUser(int id)
         {
             var user = await _userRepository.GetById(id);
-
             return user.Favorites;
         }
 
         public async Task<IEnumerable<Purchase>> GetAllPurchasesForUser(int id)
         {
             var user = await _userRepository.GetById(id);
-
             return user.Purchases;
         }
 
         public async Task<IEnumerable<Review>> GetAllReviewsByUser(int id)
         {
             var user = await _userRepository.GetById(id);
-
             return user.Reviews;
         }
 
-        public async Task GetPurchasesDetails(int userId, int movieId)
+        public async Task<Purchase> GetPurchasesDetails(int userId, int movieId)
         {
-            throw new NotImplementedException();
+            var purchases = await GetAllPurchasesForUser(userId);
+            var purchaseDetails = purchases.FirstOrDefault(p => p.MovieId == movieId);
+            return purchaseDetails;
         }
 
         public async Task<bool> IsMoviePurchased(PurchaseRequestModel purchaseRequest, int userId)
@@ -112,12 +110,25 @@ namespace Infrastructure.Services
                 }
             }
             return false;
-
         }
 
-        public async Task PurchaseMovie(PurchaseRequestModel purchaseRequest, int userId)
+        public async Task<bool> PurchaseMovie(PurchaseRequestModel purchaseRequest, int userId)
         {
-            throw new NotImplementedException();
+            if (await IsMoviePurchased(purchaseRequest, userId) == false)
+            {
+                var moviePurchase = new Purchase
+                {
+                    Id = purchaseRequest.Id,
+                    UserId = userId,
+                    PurchaseNumber = purchaseRequest.PurchaseNumber,
+                    TotalPrice = purchaseRequest.TotalPrice,
+                    PurchaseDateTime = purchaseRequest.PurchaseDateTime,
+                    MovieId = purchaseRequest.MovieId
+                };
+                var moviePurchased = await _purchaseRepository.Add(moviePurchase);
+                return true;
+            }
+            return false;
         }
 
         public async Task<bool> RemoveFavorite(FavoriteRequestModel favoriteRequest)
@@ -134,7 +145,8 @@ namespace Infrastructure.Services
 
         public async Task UpdateMovieReview(ReviewRequestModel reviewRequest)
         {
-            throw new NotImplementedException();
+            var oldReview = await DeleteMovieReview(reviewRequest.UserId, reviewRequest.MovieId);
+            await AddMovieReview(reviewRequest);
         }
     }
 }

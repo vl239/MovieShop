@@ -1,7 +1,9 @@
 ﻿using System;
+using ApplicationCore.Entities;
+
 namespace ApplicationCore.Contracts.Repositories
 {
-	public interface IPurchaseRepository
+	public interface IPurchaseRepository : IRepository<Purchase>
 	{
 	}
 }

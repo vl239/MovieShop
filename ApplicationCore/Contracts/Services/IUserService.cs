@@ -6,13 +6,13 @@ namespace ApplicationCore.Contracts.Services
 {
 	public interface IUserService
 	{
-		Task PurchaseMovie(PurchaseRequestModel purchaseRequest, int userId);
+		Task<bool> PurchaseMovie(PurchaseRequestModel purchaseRequest, int userId);
 
 		Task<bool> IsMoviePurchased(PurchaseRequestModel purchaseRequest, int userId);
 
 		Task<IEnumerable<Purchase>> GetAllPurchasesForUser(int id);
 
-		Task GetPurchasesDetails(int userId, int movieId);
+		Task<Purchase> GetPurchasesDetails(int userId, int movieId);
 
 		Task<bool> AddFavorite(FavoriteRequestModel favoriteRequest);
 
