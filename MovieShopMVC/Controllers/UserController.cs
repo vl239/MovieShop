@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Contracts.Services;
+using ApplicationCore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieShopMVC.Services;
@@ -48,8 +49,10 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddReview()
+        public async Task<IActionResult> AddReview(ReviewRequestModel model)
         {
+            var userId = _currentLoggedInUser.UserId;
+            await _userService.AddMovieReview(model);
             return View();
         }
 
@@ -60,8 +63,13 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BuyMovie()
+        public async Task<IActionResult> BuyMovie(PurchaseRequestModel model)
         {
+            var userId = _currentLoggedInUser.UserId;
+            if (await _userService.IsMoviePurchased(model, userId) == false)
+            {
+                await _userService.PurchaseMovie(model, userId);
+            }
             return View();
         }
 

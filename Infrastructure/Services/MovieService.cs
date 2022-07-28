@@ -1,6 +1,7 @@
 ﻿using System;
 using ApplicationCore.Contracts.Repositories;
 using ApplicationCore.Contracts.Services;
+using ApplicationCore.Entities;
 using ApplicationCore.Models;
 
 namespace Infrastructure.Services
@@ -8,15 +9,22 @@ namespace Infrastructure.Services
 	public class MovieService : IMovieService
 	{
         public readonly IMovieRepository _movieRepository;
+        public readonly IRepository<Review> _reviewRepository;
 
-        public MovieService(IMovieRepository movieRepository)
+        public MovieService(IMovieRepository movieRepository, IRepository<Review> reviewRepository)
         {
             _movieRepository = movieRepository;
+            _reviewRepository = reviewRepository;
         }
 
         public async Task<MovieDetailsModel> GetMovieDetails(int id)
         {
             var movieDetails = await _movieRepository.GetById(id);
+
+            if (movieDetails == null)
+            {
+                return null;
+            }
 
             int rating_count = movieDetails.Reviews.Select(r => r.Rating).Count();
             decimal rating = 0;
@@ -89,6 +97,26 @@ namespace Infrastructure.Services
             }
 
             return movieCards;
+        }
+
+        public async Task<List<MovieCardModel>> GetTopRatedMovies()
+        {
+            var movies = await _movieRepository.Get30HighestRatedMovies();
+
+            var movieCards = new List<MovieCardModel>();
+
+            foreach (var movie in movies)
+            {
+                movieCards.Add(new MovieCardModel { Id = movie.Id, PosterUrl = movie.PosterUrl, Title = movie.Title });
+            }
+
+            return movieCards;
+        }
+
+        public async Task<IEnumerable<Review>> GetMovieReviews(int id)
+        {
+            var movie = await _movieRepository.GetById(id);
+            return movie.Reviews;
         }
     }
 }

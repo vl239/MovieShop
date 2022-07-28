@@ -27,7 +27,7 @@ public class HomeController : Controller
     {
         // home page
         // top 30 movies -> Movie Service
-        // intance of MovieService class
+        // instance of MovieService class
         // newing up
         // refactor this code
         //var movieService = new MovieService();

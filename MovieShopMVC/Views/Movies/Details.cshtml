@@ -1,5 +1,11 @@
 ﻿@model ApplicationCore.Models.MovieDetailsModel
 
+@using MovieShopMVC.Services
+@inject ICurrentLoggedInUser currentUser
+
+@using ApplicationCore.Contracts.Services
+@inject IUserService userService
+
 @{
     ViewData["Title"] = Model.Title;
 }
@@ -71,24 +77,32 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#buy">BUY $@Model.Price</button>
-                <div class="modal fade" id="buy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Buy Movie</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Purchase @Model.Title for $@Model.Price&#63;</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Purchase</button>
+                @*<partial name="_BuyMovieButton"/>*@
+                @if (await userService.IsMoviePurchased(new ApplicationCore.Models.PurchaseRequestModel { MovieId = Model.Id }, currentUser.UserId) == false)
+                {
+                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#buy">BUY $@Model.Price</button>
+                    <div class="modal fade" id="buy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Buy Movie</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Purchase @Model.Title for $@Model.Price&#63;</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Purchase</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-light">Watch Movie</button>
+                }
             </div>
         </div>
     </div>

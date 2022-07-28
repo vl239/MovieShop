@@ -127,23 +127,23 @@ namespace Infrastructure.Services
             return false;
         }
 
-        public async Task<bool> PurchaseMovie(PurchaseRequestModel purchaseRequest, int userId)
+        public async Task PurchaseMovie(PurchaseRequestModel purchaseRequest, int userId)
         {
-            if (await IsMoviePurchased(purchaseRequest, userId) == false)
-            {
+            //if (await IsMoviePurchased(purchaseRequest, userId) == false)
+            //{
                 var moviePurchase = new Purchase
                 {
                     Id = purchaseRequest.Id,
                     UserId = userId,
                     PurchaseNumber = purchaseRequest.PurchaseNumber,
-                    TotalPrice = purchaseRequest.TotalPrice,
+                    TotalPrice = purchaseRequest.Price,
                     PurchaseDateTime = purchaseRequest.PurchaseDateTime,
                     MovieId = purchaseRequest.MovieId
                 };
                 var moviePurchased = await _purchaseRepository.Add(moviePurchase);
-                return true;
-            }
-            return false;
+            //    return true;
+            //}
+            //return false;
         }
 
         public async Task<bool> RemoveFavorite(FavoriteRequestModel favoriteRequest)
