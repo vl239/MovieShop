@@ -9,13 +9,13 @@ namespace Infrastructure.Services
 	public class MovieService : IMovieService
 	{
         public readonly IMovieRepository _movieRepository;
-        public readonly IRepository<Review> _reviewRepository;
+        //public readonly IRepository<Review> _reviewRepository;
         public readonly IPurchaseRepository _purchaseRepository;
 
-        public MovieService(IMovieRepository movieRepository, IRepository<Review> reviewRepository, IPurchaseRepository purchaseRepository)
+        public MovieService(IMovieRepository movieRepository, IPurchaseRepository purchaseRepository)
         {
             _movieRepository = movieRepository;
-            _reviewRepository = reviewRepository;
+            //_reviewRepository = reviewRepository;
             _purchaseRepository = purchaseRepository;
         }
 
