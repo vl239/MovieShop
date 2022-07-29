@@ -10,11 +10,13 @@ namespace Infrastructure.Services
 	{
         public readonly IMovieRepository _movieRepository;
         public readonly IRepository<Review> _reviewRepository;
+        public readonly IPurchaseRepository _purchaseRepository;
 
-        public MovieService(IMovieRepository movieRepository, IRepository<Review> reviewRepository)
+        public MovieService(IMovieRepository movieRepository, IRepository<Review> reviewRepository, IPurchaseRepository purchaseRepository)
         {
             _movieRepository = movieRepository;
             _reviewRepository = reviewRepository;
+            _purchaseRepository = purchaseRepository;
         }
 
         public async Task<MovieDetailsModel> GetMovieDetails(int id)
@@ -118,6 +120,24 @@ namespace Infrastructure.Services
             var movie = await _movieRepository.GetById(id);
             return movie.Reviews;
         }
+
+        //public async Task<List<PurchasedMoviesModel>> GetMoviesPurchasedBetween(DateTime start, DateTime end)
+        //{
+        //    var purchases = await _purchaseRepository.GetPurchasesBetween(start, end);
+        //    var movieIds = purchases.Select(p => p.MovieId).Distinct();
+
+        //    var movies = new List<PurchasedMoviesModel>();
+        //    foreach (var movieId in movieIds)
+        //    {
+        //        int count = await _purchaseRepository.GetPurchaseCountForMovie(movieId);
+
+        //        var movie = await _movieRepository.GetById(movieId);
+
+        //        movies.Add(new PurchasedMoviesModel { Movie = movie, PurchaseCount = count });
+        //    }
+
+        //    return movies.OrderByDescending(m => m.PurchaseCount).ToList();
+        //}
     }
 }
 

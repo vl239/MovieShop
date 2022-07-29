@@ -17,6 +17,8 @@ namespace ApplicationCore.Contracts.Services
 		Task<PagedResultSetModel<MovieCardModel>> GetMoviesByGenre(int genreId, int pageSize = 30, int pageNumber = 1);
 
 		Task<IEnumerable<Review>> GetMovieReviews(int id);
+
+		//Task<List<PurchasedMoviesModel>> GetMoviesPurchasedBetween(DateTime start, DateTime end);
 	}
 }
 

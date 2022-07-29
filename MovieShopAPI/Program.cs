@@ -26,6 +26,7 @@ builder.Services.AddScoped<ICastRepository, CastRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IRepository<Review>, Repository<Review>>();
+builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
 
 // inject the connection string into DbContext options conustructor
 // get the connection string from app settings
